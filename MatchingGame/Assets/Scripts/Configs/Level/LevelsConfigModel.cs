@@ -12,6 +12,7 @@ namespace Configs.Level
     public class LevelConfigModel
     {
         public int level;
+        public int pairCount;
         public string[] cardIds;
         public int columns;
         public int rows;
