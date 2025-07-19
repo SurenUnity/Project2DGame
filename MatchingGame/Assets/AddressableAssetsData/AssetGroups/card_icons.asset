@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: card_icons
+  m_EditorClassIdentifier: 
+  m_GroupName: card_icons
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 3d1695b7682394d64961f3af0e445780
+  m_SerializeEntries:
+  - m_GUID: 9b7b733381ce08d49bfa57bf33e62a4e
+    m_Address: bomb
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 94bd0f30e4f250940b7124804a86cfee
+    m_Address: hand-open
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 386c0f51e77d64e488ffc54e066172b4
+    m_Address: meteor
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cf4882c918babdb4f9408fa2167c9d55
+    m_Address: key
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cd39961908a67fe4eac447bd4a0d59d7
+    m_Address: battleaxe
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9c63d6a9ca485ec489eb598b0edc441f
+    m_Address: sword2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b39ccdf2015654b45b55960c0227e7d9
+    m_Address: plus
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4ff72ebbe5cb8cb44aec81cc78e7c3fa
+    m_Address: crown
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 907b479847733014ab085dde25847da4
+    m_Address: card-hearts
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 47ce70a4be5972e4e934e17944d995e8
+    m_Address: rocket
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 320aa043613b20848b24440a0fd254b1
+    m_Address: trophy
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 896d711c697bef346a040d5ff9c1aef4
+    m_Address: sun
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 26d65a11fcecc5348a88ec196378d368
+    m_Address: fort
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4821f9c494b79774fbbf0c49f2ea9056
+    m_Address: axe
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 72bca99913f9f5f4a860528b7f77cce8
+    m_Address: star
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a4d6c044f84dbc94bb8b075cf70e1722
+    m_Address: fire2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: dfa7573a6acf9e143a09725f05116e1a
+    m_Address: chest
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 39c13fdd7e06acd4a89f7bf116ffe861
+    m_Address: card-clubs
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2647170c0abeeaf46b8e5f2058d463e3
+    m_Address: tower2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ad4f0495bda3d01418c589e71f5afba1
+    m_Address: diamond
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5830d82cd44ed954281f452708f8ca66
+    m_Address: card-diamonds
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a882deb68ad6ae74f893848b336dbffb
+    m_Address: bell
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1e25b4d3914dba74d99d9ca369c6614a
+    m_Address: coffee
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d59a9028056a06d4ab05b73e52f310cf
+    m_Address: home2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4b9e7896d83fe534d9b5750286be90c8
+    m_Address: card-spades
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1b1103ef7ff065242871702907692b06, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: c62c6c97040ec4633a6775eab3c397a5, type: 2}
+    - {fileID: 11400000, guid: db1b8a3f1ef664baaaa8a735d5400d35, type: 2}

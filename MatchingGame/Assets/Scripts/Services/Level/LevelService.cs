@@ -41,6 +41,8 @@ namespace Services.Level
                 var levelItem = new LevelItem(levelConfigModel);
                 _levels.Add(levelItem);
             }
+
+            _levelItem.Value = _levels[0];
         }
     }
 }
