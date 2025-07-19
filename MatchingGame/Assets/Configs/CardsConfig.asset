@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardsConfig:
     cards:
-    - id: basic
+    - id: axe
+    - id: bomb

@@ -35,7 +35,7 @@ namespace ClientServices
             if (!_sprites.TryGetValue(name, out var sprite))
             {
                 sprite = await Addressables.LoadAssetAsync<Sprite>(name);
-                _sprites.Add(name, sprite);
+                _sprites.TryAdd(name, sprite);
             }
 
             return sprite;

@@ -11,7 +11,7 @@ namespace Views.World.Cards
 {
     public class CardItemItemViewModel : ICardItemViewModel
     {
-        public event Action<ICardItemViewModel> Clicked;
+        public event Action<ICardItemViewModel> OnClick;
         
         private readonly ICardItem _cardItem;
         private readonly IAssetsProvider _assetsProvider;
@@ -36,7 +36,7 @@ namespace Views.World.Cards
         public void Click()
         {
             _cardItem.Select();
-            Clicked?.Invoke(this);
+            OnClick?.Invoke(this);
         }
 
         private async UniTaskVoid LoadSprite(string id)

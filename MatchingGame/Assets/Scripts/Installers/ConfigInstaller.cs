@@ -13,9 +13,9 @@ namespace Installers
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<CardsConfigModel>()
-                .FromInstance(_globalConfigSo.cardsSoConfigModel).AsSingle();
+                .FromInstance(_globalConfigSo.cardsSoConfigModel.cardsConfig).AsSingle();
             Container.BindInterfacesAndSelfTo<LevelsConfigModel>()
-                .FromInstance(_globalConfigSo.levelsSoConfigModel).AsSingle();
+                .FromInstance(_globalConfigSo.levelsSoConfigModel.levelsConfigModel).AsSingle();
         }
     }
 }

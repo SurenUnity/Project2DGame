@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ClientServices;
 using MVVM.Core.ViewModel;
@@ -10,6 +11,8 @@ namespace Views.World.Cards
 {
     public class CardsViewModel : BaseViewModel, ICardsViewModel
     {
+        public event Action GameStared;
+
         private readonly ICardsService _cardsService;
         private readonly IMatchingGameService _matchingGameService;
         private readonly IAssetsProvider _assetsProvider;
@@ -20,8 +23,10 @@ namespace Views.World.Cards
         private List<ICardItemViewModel> _selectedCards = new();
 
         private CompositeDisposable _compositeDisposable = new();
-
+        
         public IReadOnlyReactiveCollection<ICardItemViewModel> CardViewModels => _cardViewModels;
+        public int Columns => _levelService.LevelItem.Value.Columns;
+        public int Rows => _levelService.LevelItem.Value.Rows;
 
         public CardsViewModel(ICardsService cardsService,
             IMatchingGameService matchingGameService,
@@ -35,6 +40,7 @@ namespace Views.World.Cards
 
             CreateCardViewModels(_cardsService.Cards);
             _cardsService.Cards.ObserveAdd().Subscribe(v=>CreateCardViewModel(v.Value)).AddTo(_compositeDisposable);
+            _matchingGameService.OnGameStarted += OnGameStarted;
         }
 
         private void CreateCardViewModels(IEnumerable<ICardItem> cardItems)
@@ -48,7 +54,7 @@ namespace Views.World.Cards
         private void CreateCardViewModel(ICardItem cardItem)
         {
             var cardViewModel = new CardItemItemViewModel(cardItem, _assetsProvider);
-            cardViewModel.Clicked += CardViewModelOnClicked;
+            cardViewModel.OnClick += CardViewModelOnClicked;
             _cardViewModels.Add(cardViewModel);
         }
 
@@ -72,9 +78,14 @@ namespace Views.World.Cards
             _selectedCards.Clear();
         }
 
+        private void OnGameStarted()
+        {
+            GameStared?.Invoke();
+        }
+        
         public override void ViewDestroyed()
         {
-            _compositeDisposable.Dispose();
+            Dispose();
             base.ViewDestroyed();
         }
 
@@ -82,8 +93,10 @@ namespace Views.World.Cards
         {
             foreach (var cardViewModel in _cardViewModels)
             {
+                cardViewModel.OnClick -= CardViewModelOnClicked;
                 cardViewModel.Dispose();
             }
+            _matchingGameService.OnGameStarted -= OnGameStarted;
             _cardViewModels.Clear();
             _compositeDisposable.Dispose();
         }

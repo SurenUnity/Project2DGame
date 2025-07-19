@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Extensions;
 using UniRx;
 using UnityEngine;
 using Views.World.Core;
@@ -10,6 +11,7 @@ namespace Views.World.Cards
     {
         [SerializeField] private Transform _cardContainer;
         [SerializeField] private CardItemView _cardItemPrefab;
+        [SerializeField] private CardGridComponent _gridComponent;
 
         private List<CardItemView> _cardItemViews = new();
 
@@ -19,8 +21,15 @@ namespace Views.World.Cards
         {
             CreateCardItems(ViewModel.CardViewModels);
             
+            ViewModel.GameStared += OnGameStared;
             ViewModel.CardViewModels.ObserveAdd().Subscribe(v => CreateCardItem(v.Value))
                 .AddTo(_compositeDisposable);
+        }
+
+        private void OnGameStared()
+        {
+            _cardItemViews.Shuffle();
+            _gridComponent.Grid(ViewModel.Columns, ViewModel.Rows, _cardItemViews.ToArray());
         }
 
         private void CreateCardItems(IEnumerable<ICardItemViewModel> cardItemViewModels)
@@ -44,6 +53,8 @@ namespace Views.World.Cards
             {
                 cardItemView.Dispose();
             }
+            
+            ViewModel.GameStared -= OnGameStared;
             
             return base.Destroy();
         }

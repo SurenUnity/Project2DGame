@@ -17,7 +17,8 @@ MonoBehaviour:
     - level: 1
       pairCount: 2
       cardIds:
-      - basic
+      - axe
+      - bomb
       columns: 2
       rows: 2
       triesCount: 1
