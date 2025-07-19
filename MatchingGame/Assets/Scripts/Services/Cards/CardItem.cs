@@ -3,27 +3,6 @@ using UniRx;
 
 namespace Services.Cards
 {
-    public enum CardStateType
-    {
-        Enable,
-        Selected,
-        Deselected,
-        Matched,
-        Disable
-    }
-    
-    public interface ICardItem
-    {
-        IReadOnlyReactiveProperty<string> Id { get; }
-        IReadOnlyReactiveProperty<CardStateType> StateType { get; }
-        void Init(CardConfigModel cardConfigModel);
-        void Select();
-        void Deselect();
-        void Match();
-        void Enable();
-        void Disable();
-    }
-    
     public class CardItem : ICardItem
     {
         private CardConfigModel _cardConfigModel;
