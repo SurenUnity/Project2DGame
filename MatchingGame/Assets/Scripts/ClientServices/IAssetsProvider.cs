@@ -8,5 +8,6 @@ namespace ClientServices
     {
         UniTask<T> GetPrefab<T>(string name) where T : Component;
         UniTask<GameObject> GetPrefab(string name);
+        UniTask<Sprite> GetSprite(string name);
     }
 }

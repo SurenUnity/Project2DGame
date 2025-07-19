@@ -106,26 +106,34 @@ namespace Services.Cards
                 }
             }
 
-            foreach (var cardId in cardIds)
+            foreach (var cardItem in _cardItems)
             {
+                cardItem.Disable();
+            }
+
+            for (var index = 0; index < cardIds.Count; index++)
+            {
+                var cardId = cardIds[index];
                 var cardConfigModel = _cardsConfigModel.cards.FirstOrDefault(v => v.id == cardId);
-                    
+                
                 if (cardConfigModel == null)
                 {
                     Logger.LogError($"Card config for ID {cardId} not found.");
                     return;
                 }
 
-                var cardItem = _cardItems.FirstOrDefault(v => v.StateType.Value is CardStateType.Disable);
-                if (cardItem == null)
-                { 
+                ICardItem cardItem;
+
+                if (index >= _cardItems.Count)
+                {
                     cardItem = new CardItem();
+                    _cardItems.Add(cardItem);
                 }
                 
+                cardItem = _cardItems[index];
+
                 cardItem.Init(cardConfigModel);
                 cardItem.Enable();
-                
-                _cardItems.Add(cardItem);
             }
         }
 

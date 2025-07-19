@@ -9,6 +9,7 @@ namespace Services.MatchingGame
 {
     public class MatchingGameService : IMatchingGameService
     {
+        public event Action OnGameStarted;
         public event Action OnWin;
         public event Action OnLose;
         
@@ -32,6 +33,7 @@ namespace Services.MatchingGame
         public void StartGame()
         {
             _cardsService.PrepareCardsToPlay();
+            OnGameStarted?.Invoke();
         }
 
         public void Match(List<string> cardIds)
