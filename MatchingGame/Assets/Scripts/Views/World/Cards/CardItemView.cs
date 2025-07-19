@@ -2,10 +2,11 @@ using System;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Views.World.Components;
 
 namespace Views.World.Cards
 {
-    public class CardItemView : MonoBehaviour, IPointerClickHandler, IDisposable
+    public class CardItemView : MonoBehaviour, IClickable, IDisposable
     {
         [SerializeField] private SpriteRenderer _iconSpriteRenderer;
         
@@ -35,7 +36,7 @@ namespace Views.World.Cards
             _disposable.Dispose();
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        public void Click()
         {
             _itemViewModel.Click();
         }
