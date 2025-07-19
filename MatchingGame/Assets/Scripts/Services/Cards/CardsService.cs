@@ -12,7 +12,7 @@ namespace Services.Cards
     public interface ICardsService : IDisposable
     {
         IReadOnlyReactiveCollection<ICardItem> Cards { get; }
-        bool TryMatch(List<ICardItem> cardItems);
+        bool TryMatch(List<string> cardIds);
         void PrepareCardsToPlay();
         bool IsAllCardsMatched();
     }
@@ -37,10 +37,14 @@ namespace Services.Cards
             _levelService.LevelItem.Subscribe(CreateCards).AddTo(_disposable);
         }
 
-        public bool TryMatch(List<ICardItem> cardItems)
+        public bool TryMatch(List<string> cardIds)
         {
             var isMatched = false;
 
+            var cardItems = _cardItems
+                .Where(card => cardIds.Contains(card.Id.Value))
+                .ToList();
+            
             for (int i = 0; i < cardItems.Count; i++)
             {
                 if (i + 1 >= cardItems.Count)
