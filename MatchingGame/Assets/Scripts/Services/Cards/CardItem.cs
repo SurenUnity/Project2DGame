@@ -5,6 +5,7 @@ namespace Services.Cards
 {
     public enum CardStateType
     {
+        Enable,
         Selected,
         Deselected,
         Matched,
@@ -13,26 +14,32 @@ namespace Services.Cards
     
     public interface ICardItem
     {
+        IReadOnlyReactiveProperty<string> Id { get; }
+        IReadOnlyReactiveProperty<CardStateType> StateType { get; }
+        void Init(CardConfigModel cardConfigModel);
         void Select();
         void Deselect();
         void Match();
+        void Enable();
         void Disable();
     }
     
     public class CardItem : ICardItem
     {
-        private readonly CardConfigModel _cardConfigModel;
+        private CardConfigModel _cardConfigModel;
 
         private IReactiveProperty<CardStateType> _stateType = new ReactiveProperty<CardStateType>();
+        private IReactiveProperty<string> _id = new ReactiveProperty<string>();
         
-        public string Id => _cardConfigModel.id;
+        public IReadOnlyReactiveProperty<string> Id => _id;
         public IReadOnlyReactiveProperty<CardStateType> StateType => _stateType;
 
-        public CardItem(CardConfigModel cardConfigModel)
+        public void Init(CardConfigModel cardConfigModel)
         {
             _cardConfigModel = cardConfigModel;
+            _id.Value = cardConfigModel.id;
         }
-
+        
         public void Select()
         {
             _stateType.Value = CardStateType.Selected;
@@ -46,6 +53,11 @@ namespace Services.Cards
         public void Match()
         {
             _stateType.Value = CardStateType.Matched;
+        }
+
+        public void Enable()
+        {
+            _stateType.Value = CardStateType.Enable;
         }
 
         public void Disable()

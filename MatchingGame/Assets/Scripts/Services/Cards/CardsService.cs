@@ -11,7 +11,10 @@ namespace Services.Cards
 {
     public interface ICardsService : IDisposable
     {
-        
+        IReadOnlyReactiveCollection<ICardItem> Cards { get; }
+        bool TryMatch(List<ICardItem> cardItems);
+        void PrepareCardsToPlay();
+        bool IsAllCardsMatched();
     }
     
     public class CardsService : ICardsService
@@ -32,6 +35,51 @@ namespace Services.Cards
             _levelService = levelService;
 
             _levelService.LevelItem.Subscribe(CreateCards).AddTo(_disposable);
+        }
+
+        public bool TryMatch(List<ICardItem> cardItems)
+        {
+            var isMatched = false;
+
+            for (int i = 0; i < cardItems.Count; i++)
+            {
+                if (i + 1 >= cardItems.Count)
+                {
+                    break;
+                }
+
+                var firstCard = _cardItems[i];
+                var secondCard = _cardItems[i + 1];
+                
+                isMatched = firstCard.Id == secondCard.Id;
+            }
+
+            foreach (var cardItem in cardItems)
+            {
+                if (isMatched)
+                {
+                    cardItem.Match();
+                }
+                else
+                {
+                    cardItem.Deselect();
+                }
+            }
+
+            return isMatched;
+        }
+
+        public bool IsAllCardsMatched()
+        {
+            return _cardItems.All(v => v.StateType.Value is CardStateType.Matched);
+        }
+
+        public void PrepareCardsToPlay()
+        {
+            foreach (var cardItem in _cardItems)
+            {
+                cardItem.Enable();
+            }
         }
         
         private void CreateCards(ILevelItem levelItem)
@@ -61,8 +109,6 @@ namespace Services.Cards
                     cardIds.Add(cardId);
                 }
             }
-            
-            cardIds.Shuffle();
 
             foreach (var cardId in cardIds)
             {
@@ -73,8 +119,16 @@ namespace Services.Cards
                     Logger.LogError($"Card config for ID {cardId} not found.");
                     return;
                 }
+
+                var cardItem = _cardItems.FirstOrDefault(v => v.StateType.Value is CardStateType.Disable);
+                if (cardItem == null)
+                { 
+                    cardItem = new CardItem();
+                }
                 
-                var cardItem = new CardItem(cardConfigModel);
+                cardItem.Init(cardConfigModel);
+                cardItem.Enable();
+                
                 _cardItems.Add(cardItem);
             }
         }
