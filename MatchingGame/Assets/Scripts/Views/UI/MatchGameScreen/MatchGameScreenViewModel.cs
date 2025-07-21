@@ -6,6 +6,7 @@ using Services.Score;
 using UniRx;
 using Views.Layer;
 using Views.UI.Core;
+using Views.UI.LosePopup;
 using Views.UI.WinPopup;
 
 namespace Views.UI.MatchGameScreen
@@ -35,6 +36,12 @@ namespace Views.UI.MatchGameScreen
             _scoreService = scoreService;
             _levelService = levelService;
             _matchingGameService.OnWin += OnWin;
+            _matchingGameService.OnLose += OnLose;
+        }
+
+        private void OnLose()
+        {
+            OpenLosePopup().Forget();
         }
 
         private void OnWin()
@@ -47,8 +54,14 @@ namespace Views.UI.MatchGameScreen
             await ViewManager.ShowAsync<WinPopupView>(LayerNames.Popup);
         }
 
+        private async UniTaskVoid OpenLosePopup()
+        {
+            await ViewManager.ShowAsync<LosePopupView>(LayerNames.Popup);
+        }
+
         public override void Dispose()
         {
+            _matchingGameService.OnWin -= OnWin;
         }
     }
 }
