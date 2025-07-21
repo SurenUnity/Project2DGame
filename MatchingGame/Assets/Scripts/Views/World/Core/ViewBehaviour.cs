@@ -13,6 +13,7 @@ namespace Views.World.Core
         {
             gameObject.SetActive(true);
             _isShown = true;
+            ViewModel.ViewShowed();
             return UniTask.CompletedTask;
         }
 
@@ -20,6 +21,7 @@ namespace Views.World.Core
         {
             gameObject.SetActive(false);
             _isShown = false;
+            ViewModel.ViewHided();
             return UniTask.CompletedTask;
         }
 
@@ -27,12 +29,15 @@ namespace Views.World.Core
         {
             await Hide();
             Dispose();
+            ViewModel.ViewDestroyed();
             Destroy(gameObject);
         }
 
         public override void DestroyInstantly()
         {
             Dispose();
+            ViewModel.ViewDestroyed();
+            _isShown = false;
             Destroy(gameObject);
         }
     }
