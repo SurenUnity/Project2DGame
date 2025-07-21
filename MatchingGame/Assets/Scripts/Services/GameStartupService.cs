@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using MVVM.Core;
 using Services.MatchingGame;
 using Views.Layer;
+using Views.UI.MatchGameScreen;
 using Views.World.Cards;
 
 namespace Services
@@ -26,6 +27,7 @@ namespace Services
         public async UniTaskVoid Startup()
         {
             await _viewManager.ShowAsync<CardsView>(LayerNames.World);
+            await _viewManager.ShowAsync<MatchGameScreenView>(LayerNames.Screen);
             _matchingGameService.StartGame();
         }
     }

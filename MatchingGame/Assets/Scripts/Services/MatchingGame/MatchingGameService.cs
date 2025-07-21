@@ -20,7 +20,7 @@ namespace Services.MatchingGame
 
         private IReactiveProperty<int> _triesCount = new ReactiveProperty<int>();
 
-        public IReadOnlyReactiveProperty<int> TriesCount => _triesCount;
+        public IReadOnlyReactiveProperty<int> TriesLeftCount => _triesCount;
 
         public MatchingGameService(ILevelService levelService,
             ICardsService cardsService,
@@ -34,6 +34,7 @@ namespace Services.MatchingGame
         public void StartGame()
         {
             _cardsService.PrepareCardsToPlay();
+            _triesCount.Value = _levelService.LevelItem.Value.TriesCount;
             OnGameStarted?.Invoke();
         }
 

@@ -3,6 +3,7 @@ using MVVM.Core;
 using MVVM.Core.Factory;
 using MVVM.Core.Mapper;
 using UnityEngine;
+using Views.UI.MatchGameScreen;
 using Views.World.Cards;
 using Zenject;
 
@@ -32,6 +33,7 @@ namespace Installers
         private void RegisterWorldViews()
         {
             _viewViewModelMapper.Register<CardsView, CardsViewModel>();
+            _viewViewModelMapper.Register<MatchGameScreenView, MatchGameScreenViewModel>();
         }
     }
 }

@@ -21,6 +21,10 @@ MonoBehaviour:
     m_Address: CardsView
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 9a82f96c46aa941e691a7591d2ecd409
+    m_Address: MatchGameScreenView
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1b1103ef7ff065242871702907692b06, type: 2}
   m_SchemaSet:

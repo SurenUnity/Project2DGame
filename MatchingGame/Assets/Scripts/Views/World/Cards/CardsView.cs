@@ -75,7 +75,7 @@ namespace Views.World.Cards
             _cardItemViews.Add(cardItemView);
         }
 
-        public override UniTask Destroy()
+        public override void Dispose()
         {
             _previewCancellationTokenSource?.Cancel();
             
@@ -85,8 +85,6 @@ namespace Views.World.Cards
             }
             
             ViewModel.GameStared -= OnGameStarted;
-            
-            return base.Destroy();
         }
     }
 }

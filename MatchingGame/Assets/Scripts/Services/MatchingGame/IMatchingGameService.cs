@@ -9,7 +9,7 @@ namespace Services.MatchingGame
         event Action OnGameStarted;
         event Action OnWin;
         event Action OnLose;
-        IReadOnlyReactiveProperty<int> TriesCount { get; }
+        IReadOnlyReactiveProperty<int> TriesLeftCount { get; }
         void StartGame();
         bool Match(List<int> cardStaticIds);
     }
