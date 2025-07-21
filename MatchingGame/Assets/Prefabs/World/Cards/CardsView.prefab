@@ -48,6 +48,7 @@ MonoBehaviour:
   _cardContainer: {fileID: 5440275094802527606}
   _cardItemPrefab: {fileID: 8999037959274348078, guid: dc1159b8a09c54988871da42a45884e4, type: 3}
   _gridComponent: {fileID: 3013377638086761206}
+  _previewDelay: 1.2
 --- !u!114 &3013377638086761206
 MonoBehaviour:
   m_ObjectHideFlags: 0
