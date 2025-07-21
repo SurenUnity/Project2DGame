@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MVVM.Core.View
 {
-    public abstract class BaseViewBehaviour<TViewModel> : MonoBehaviour, IViewInitializer where TViewModel : IViewModel
+    public abstract class BaseViewBehaviour<TViewModel> : MonoBehaviour, IViewInitializer, IDisposable where TViewModel : IViewModel
     {
         public string Name { get; private set; }
         public abstract bool IsShown { get; }
@@ -33,5 +33,6 @@ namespace MVVM.Core.View
         public abstract UniTask Destroy();
         
         public abstract void DestroyInstantly();
+        public abstract void Dispose();
     }
 }

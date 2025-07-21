@@ -2,9 +2,9 @@ using Cysharp.Threading.Tasks;
 using MVVM.Core.View;
 using MVVM.Core.ViewModel;
 
-namespace Views.World.Core
+namespace Views.UI.Core
 {
-    public abstract class ViewBehaviour<TViewModel> : BaseViewBehaviour<TViewModel> where TViewModel : IViewModel
+    public abstract class ScreenViewBehaviour<TViewModel> : BaseViewBehaviour<TViewModel> where TViewModel : IViewModel
     {
         private bool _isShown;
         public override bool IsShown => _isShown;
