@@ -22,3 +22,28 @@ MonoBehaviour:
       columns: 2
       rows: 2
       triesCount: 1
+    - level: 2
+      pairCount: 2
+      cardIds:
+      - axe
+      - bomb
+      - bell
+      columns: 2
+      rows: 3
+      triesCount: 5
+    - level: 2
+      pairCount: 3
+      cardIds:
+      - axe
+      - bomb
+      - bell
+      - battleaxe
+      - card-clubs
+      - card-diamonds
+      - card-hearts
+      - card-spades
+      - chest
+      - coffee
+      columns: 5
+      rows: 6
+      triesCount: 15

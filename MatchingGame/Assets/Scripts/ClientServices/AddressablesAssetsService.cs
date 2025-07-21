@@ -32,6 +32,11 @@ namespace ClientServices
 
         public async UniTask<Sprite> GetSprite(string name)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                return null;
+            }
+            
             if (!_sprites.TryGetValue(name, out var sprite))
             {
                 sprite = await Addressables.LoadAssetAsync<Sprite>(name);

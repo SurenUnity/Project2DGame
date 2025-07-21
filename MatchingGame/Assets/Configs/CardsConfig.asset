@@ -16,3 +16,11 @@ MonoBehaviour:
     cards:
     - id: axe
     - id: bomb
+    - id: bell
+    - id: battleaxe
+    - id: card-clubs
+    - id: card-diamonds
+    - id: card-hearts
+    - id: card-spades
+    - id: chest
+    - id: coffee

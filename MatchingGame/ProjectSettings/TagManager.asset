@@ -41,12 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: UI
-    uniqueID: 1212718525
-    locked: 0
   - name: World
     uniqueID: 3993225713
     locked: 0
   - name: Card
     uniqueID: 604628571
+    locked: 0
+  - name: Screen
+    uniqueID: 1212718525
+    locked: 0
+  - name: Popup
+    uniqueID: 2367068209
     locked: 0
