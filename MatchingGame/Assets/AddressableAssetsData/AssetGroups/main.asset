@@ -33,6 +33,10 @@ MonoBehaviour:
     m_Address: LosePopupView
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 1dc08d3a44a3346ffbef14cffa035985
+    m_Address: MainMenuScreenView
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1b1103ef7ff065242871702907692b06, type: 2}
   m_SchemaSet:

@@ -8,10 +8,12 @@ namespace Views.UI.WinPopup
     public class WinPopupView : PopupViewBehaviour<IWinPopupViewModel>
     {
         [SerializeField] private Button _nextLevelButton;
+        [SerializeField] private Button _mainMenuButton;
         
         protected override void OnViewModelBind()
         {
             _nextLevelButton.onClick.AddListener(NextLevelClickHandler);
+            _mainMenuButton.onClick.AddListener(MainMenuClickHandler);
         }
 
         private void NextLevelClickHandler()
@@ -39,6 +41,7 @@ namespace Views.UI.WinPopup
         public override void Dispose()
         {
             _nextLevelButton.onClick.RemoveListener(NextLevelClickHandler);
+            _mainMenuButton.onClick.RemoveListener(MainMenuClickHandler);
         }
     }
 }

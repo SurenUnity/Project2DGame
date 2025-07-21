@@ -3,6 +3,8 @@ using Cysharp.Threading.Tasks;
 using MVVM.Core.ViewModel;
 using Services.Level;
 using Services.MatchingGame;
+using Views.Layer;
+using Views.UI.MainMenu;
 
 namespace Views.UI.WinPopup
 {
@@ -29,7 +31,7 @@ namespace Views.UI.WinPopup
 
         public async UniTaskVoid MainMenu()
         {
-            //TODO open main menu screen
+            await ViewManager.ShowAsync<MainMenuScreenView>(LayerNames.Screen);
         }
         
         public override void Dispose()

@@ -23,7 +23,13 @@ namespace Views.UI.LosePopup
 
         private void MainMenuClickHandler()
         {
+            MainMenu().Forget();
+        }
+
+        private async UniTaskVoid MainMenu()
+        {
             ViewModel.MainMenu().Forget();
+            await Hide();
         }
 
         private async UniTaskVoid RestartLevel()

@@ -245,6 +245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _popupAnimationsComponent: {fileID: 6704688428571924968}
   _nextLevelButton: {fileID: 4596307352579980831}
+  _mainMenuButton: {fileID: 130258329540315673}
 --- !u!1 &973753046510390897
 GameObject:
   m_ObjectHideFlags: 0

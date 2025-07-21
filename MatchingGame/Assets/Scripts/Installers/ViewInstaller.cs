@@ -4,6 +4,7 @@ using MVVM.Core.Factory;
 using MVVM.Core.Mapper;
 using UnityEngine;
 using Views.UI.LosePopup;
+using Views.UI.MainMenu;
 using Views.UI.MatchGameScreen;
 using Views.UI.WinPopup;
 using Views.World.Cards;
@@ -38,6 +39,7 @@ namespace Installers
             _viewViewModelMapper.Register<MatchGameScreenView, MatchGameScreenViewModel>();
             _viewViewModelMapper.Register<WinPopupView, WinPopupViewModel>();
             _viewViewModelMapper.Register<LosePopupView, LosePopupViewModel>();
+            _viewViewModelMapper.Register<MainMenuScreenView, MainMenuScreenViewModel>();
         }
     }
 }

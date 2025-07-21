@@ -13,6 +13,7 @@ namespace Services.MatchingGame
         public event Action OnGameStarted;
         public event Action OnWin;
         public event Action OnLose;
+        public event Action OnLevelQuit;
         
         private readonly ILevelService _levelService;
         private readonly ICardsService _cardsService;
@@ -56,10 +57,16 @@ namespace Services.MatchingGame
             var isAllCardsMatched = _cardsService.IsAllCardsMatched();
             if (isAllCardsMatched)
             {
+                _scoreService.IncreaseTotalScore();
                 Win();
             }
 
             return true;
+        }
+
+        public void QuitLevel()
+        {
+            OnLevelQuit?.Invoke();
         }
 
         private void Lose()
