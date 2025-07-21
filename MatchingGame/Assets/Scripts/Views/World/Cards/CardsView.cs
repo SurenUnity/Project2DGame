@@ -41,6 +41,7 @@ namespace Views.World.Cards
             _gridComponent.Grid(ViewModel.Columns, ViewModel.Rows, _cardItemViews.ToArray());
             foreach (var cardItemView in _cardItemViews)
             {
+                cardItemView.ResetAnimation();
                 cardItemView.PreviewOn();
             }
             
