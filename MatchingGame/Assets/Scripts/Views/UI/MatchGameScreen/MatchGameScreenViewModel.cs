@@ -1,9 +1,12 @@
+using Cysharp.Threading.Tasks;
 using MVVM.Core.ViewModel;
 using Services.Level;
 using Services.MatchingGame;
 using Services.Score;
 using UniRx;
+using Views.Layer;
 using Views.UI.Core;
+using Views.UI.WinPopup;
 
 namespace Views.UI.MatchGameScreen
 {
@@ -31,6 +34,17 @@ namespace Views.UI.MatchGameScreen
             _matchingGameService = matchingGameService;
             _scoreService = scoreService;
             _levelService = levelService;
+            _matchingGameService.OnWin += OnWin;
+        }
+
+        private void OnWin()
+        {
+            OpenWinPopup().Forget();
+        }
+
+        private async UniTaskVoid OpenWinPopup()
+        {
+            await ViewManager.ShowAsync<WinPopupView>(LayerNames.Popup);
         }
 
         public override void Dispose()

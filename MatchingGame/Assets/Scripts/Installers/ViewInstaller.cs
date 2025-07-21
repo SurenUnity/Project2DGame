@@ -4,6 +4,7 @@ using MVVM.Core.Factory;
 using MVVM.Core.Mapper;
 using UnityEngine;
 using Views.UI.MatchGameScreen;
+using Views.UI.WinPopup;
 using Views.World.Cards;
 using Zenject;
 
@@ -34,6 +35,7 @@ namespace Installers
         {
             _viewViewModelMapper.Register<CardsView, CardsViewModel>();
             _viewViewModelMapper.Register<MatchGameScreenView, MatchGameScreenViewModel>();
+            _viewViewModelMapper.Register<WinPopupView, WinPopupViewModel>();
         }
     }
 }

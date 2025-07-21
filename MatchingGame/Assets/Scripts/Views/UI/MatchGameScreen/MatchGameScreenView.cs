@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -12,7 +11,7 @@ namespace Views.UI.MatchGameScreen
         [SerializeField] private TMP_Text _triesLeftText;
         [SerializeField] private TMP_Text _levelText;
 
-        private CompositeDisposable _compositeDisposable = new CompositeDisposable();
+        private CompositeDisposable _compositeDisposable = new();
         
         protected override void OnViewModelBind()
         {
