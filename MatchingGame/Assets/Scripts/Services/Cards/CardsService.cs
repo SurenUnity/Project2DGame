@@ -48,6 +48,10 @@ namespace Services.Cards
                 var secondCard = cardItems[i + 1];
                 
                 isMatched = firstCard.Id.Value == secondCard.Id.Value;
+                if (isMatched == false)
+                {
+                    break;
+                }
             }
 
             foreach (var cardItem in cardItems)
