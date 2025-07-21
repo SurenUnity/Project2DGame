@@ -11,6 +11,6 @@ namespace Services.MatchingGame
         event Action OnLose;
         IReadOnlyReactiveProperty<int> TriesCount { get; }
         void StartGame();
-        void Match(List<string> cardIds);
+        bool Match(List<int> cardStaticIds);
     }
 }

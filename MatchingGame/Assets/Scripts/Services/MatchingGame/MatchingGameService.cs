@@ -4,6 +4,7 @@ using Services.Cards;
 using Services.Level;
 using Services.Score;
 using UniRx;
+using Views.World.Cards;
 
 namespace Services.MatchingGame
 {
@@ -36,9 +37,9 @@ namespace Services.MatchingGame
             OnGameStarted?.Invoke();
         }
 
-        public void Match(List<string> cardIds)
+        public bool Match(List<int> cardStaticIds)
         {
-            var isMatchSuccess = _cardsService.TryMatch(cardIds);
+            var isMatchSuccess = _cardsService.TryMatch(cardStaticIds);
             if (!isMatchSuccess)
             {
                 _triesCount.Value--;
@@ -46,7 +47,7 @@ namespace Services.MatchingGame
                 {
                     Lose();
                 }
-                return;
+                return false;
             }
 
             _scoreService.IncreaseScore();
@@ -56,6 +57,8 @@ namespace Services.MatchingGame
             {
                 Win();
             }
+
+            return true;
         }
 
         private void Lose()

@@ -7,12 +7,19 @@ namespace Services.Cards
     {
         private CardConfigModel _cardConfigModel;
 
+        private readonly int _staticId;
         private IReactiveProperty<CardStateType> _stateType = new ReactiveProperty<CardStateType>();
         private IReactiveProperty<string> _id = new ReactiveProperty<string>();
-        
+
+        public int StaticId => _staticId;
         public IReadOnlyReactiveProperty<string> Id => _id;
         public IReadOnlyReactiveProperty<CardStateType> StateType => _stateType;
 
+        public CardItem(int staticId)
+        {
+            _staticId = staticId;
+        }
+        
         public void Init(CardConfigModel cardConfigModel)
         {
             _cardConfigModel = cardConfigModel;

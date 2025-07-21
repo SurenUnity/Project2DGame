@@ -29,12 +29,12 @@ namespace Services.Cards
             _levelService.LevelItem.Subscribe(CreateCards).AddTo(_disposable);
         }
 
-        public bool TryMatch(List<string> cardIds)
+        public bool TryMatch(List<int> cardStaticIds)
         {
             var isMatched = false;
 
             var cardItems = _cardItems
-                .Where(card => cardIds.Contains(card.Id.Value))
+                .Where(card => cardStaticIds.Contains(card.StaticId))
                 .ToList();
             
             for (int i = 0; i < cardItems.Count; i++)
@@ -44,10 +44,10 @@ namespace Services.Cards
                     break;
                 }
 
-                var firstCard = _cardItems[i];
-                var secondCard = _cardItems[i + 1];
+                var firstCard = cardItems[i];
+                var secondCard = cardItems[i + 1];
                 
-                isMatched = firstCard.Id == secondCard.Id;
+                isMatched = firstCard.Id.Value == secondCard.Id.Value;
             }
 
             foreach (var cardItem in cardItems)
@@ -126,7 +126,12 @@ namespace Services.Cards
 
                 if (index >= _cardItems.Count)
                 {
-                    cardItem = new CardItem();
+                    var staticId = 0;
+                    if (_cardItems.Count > 0)
+                    {
+                        staticId = _cardItems.Max(v => v.StaticId) + 1;
+                    }
+                    cardItem = new CardItem(staticId);
                     _cardItems.Add(cardItem);
                 }
                 

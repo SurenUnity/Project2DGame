@@ -7,7 +7,7 @@ namespace Services.Cards
     public interface ICardsService : IDisposable
     {
         IReadOnlyReactiveCollection<ICardItem> Cards { get; }
-        bool TryMatch(List<string> cardIds);
+        bool TryMatch(List<int> cardStaticIds);
         void PrepareCardsToPlay();
         bool IsAllCardsMatched();
     }

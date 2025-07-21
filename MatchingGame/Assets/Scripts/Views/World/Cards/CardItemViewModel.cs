@@ -12,7 +12,9 @@ namespace Views.World.Cards
     public class CardItemItemViewModel : ICardItemViewModel
     {
         public event Action<ICardItemViewModel> OnClick;
-        
+        public event Action OnDeselected;
+        public event Action OnMatch;
+
         private readonly ICardItem _cardItem;
         private readonly IAssetsProvider _assetsProvider;
         
@@ -20,6 +22,7 @@ namespace Views.World.Cards
 
         private CompositeDisposable _compositeDisposable = new();
 
+        public int StaticId => _cardItem.StaticId;
         public IReadOnlyReactiveProperty<string> Id => _cardItem.Id;
         public IReadOnlyReactiveProperty<Sprite> Icon => _icon;
         public IReadOnlyReactiveProperty<CardStateType> StateType => _cardItem.StateType;
@@ -37,6 +40,16 @@ namespace Views.World.Cards
         {
             _cardItem.Select();
             OnClick?.Invoke(this);
+        }
+
+        public void Match()
+        {
+            OnMatch?.Invoke();
+        }
+
+        public void Deselect()
+        {
+            OnDeselected?.Invoke();
         }
 
         private async UniTaskVoid LoadSprite(string id)
