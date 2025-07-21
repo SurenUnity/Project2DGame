@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using MVVM.Core.ViewModel;
 using Services.Level;
 using Services.MatchingGame;
@@ -8,6 +9,7 @@ namespace Views.UI.WinPopup
     public interface IWinPopupViewModel : IViewModel
     {
         void PlayNextLevel();
+        UniTaskVoid MainMenu();
     }
     
     public class WinPopupViewModel : BaseViewModel, IWinPopupViewModel
@@ -25,6 +27,11 @@ namespace Views.UI.WinPopup
             _matchingGameService.StartGame();
         }
 
+        public async UniTaskVoid MainMenu()
+        {
+            //TODO open main menu screen
+        }
+        
         public override void Dispose()
         {
         }

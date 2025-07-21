@@ -11,12 +11,17 @@ namespace Views.UI.WinPopup
         
         protected override void OnViewModelBind()
         {
-            _nextLevelButton.onClick.AddListener(OnClick);
+            _nextLevelButton.onClick.AddListener(NextLevelClickHandler);
         }
 
-        private void OnClick()
+        private void NextLevelClickHandler()
         {
             PlayNextLevel().Forget();
+        }
+
+        private void MainMenuClickHandler()
+        {
+            MainMenu().Forget();
         }
 
         private async UniTaskVoid PlayNextLevel()
@@ -24,10 +29,16 @@ namespace Views.UI.WinPopup
             ViewModel.PlayNextLevel();
             await Hide();
         }
+
+        private async UniTaskVoid MainMenu()
+        {
+            ViewModel.MainMenu().Forget();
+            await Hide();
+        }
         
         public override void Dispose()
         {
-            _nextLevelButton.onClick.RemoveListener(OnClick);
+            _nextLevelButton.onClick.RemoveListener(NextLevelClickHandler);
         }
     }
 }

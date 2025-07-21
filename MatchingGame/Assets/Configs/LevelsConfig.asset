@@ -31,7 +31,16 @@ MonoBehaviour:
       columns: 2
       rows: 3
       triesCount: 5
-    - level: 2
+    - level: 3
+      pairCount: 3
+      cardIds:
+      - axe
+      - bomb
+      - bell
+      columns: 3
+      rows: 3
+      triesCount: 15
+    - level: 3
       pairCount: 3
       cardIds:
       - axe
@@ -46,4 +55,4 @@ MonoBehaviour:
       - coffee
       columns: 5
       rows: 6
-      triesCount: 15
+      triesCount: 30
