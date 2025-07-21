@@ -26,6 +26,8 @@ namespace Views.World.Cards
         private Sequence _deselectedSequence;
         private Sequence _matchSequence;
 
+        private bool _isInteractable;
+        
         public void Init(ICardItemViewModel cardItemViewModel)
         {
             _itemViewModel = cardItemViewModel;
@@ -39,6 +41,18 @@ namespace Views.World.Cards
             SetIcon(_itemViewModel.Icon.Value);
         }
 
+        public void PreviewOn()
+        {
+            _iconSpriteRenderer.gameObject.SetActive(true);
+            _isInteractable = false;
+        }
+
+        public void PreviewOff()
+        {
+            _iconSpriteRenderer.gameObject.SetActive(false);
+            _isInteractable = true;
+        }
+        
         private void OnDeselected()
         {
             PlayDeselectAnimation();
@@ -122,6 +136,11 @@ namespace Views.World.Cards
 
         public void Click()
         {
+            if (!_isInteractable)
+            {
+                return;
+            }
+            
             if (_itemViewModel.StateType.Value is Deselected or Enable)
             {
                 _itemViewModel.Click();

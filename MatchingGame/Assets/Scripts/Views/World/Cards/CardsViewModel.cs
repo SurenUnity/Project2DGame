@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using ClientServices;
 using Cysharp.Threading.Tasks;
 using MVVM.Core.ViewModel;
@@ -27,6 +28,7 @@ namespace Views.World.Cards
 
         private Queue<ICardItemViewModel> _selectedCards = new();
 
+        private CancellationTokenSource _delaysCancellationTokenSource = new();
         private CompositeDisposable _compositeDisposable = new();
         
         public IReadOnlyReactiveCollection<ICardItemViewModel> CardViewModels => _cardViewModels;
@@ -92,7 +94,12 @@ namespace Views.World.Cards
 
             if (isSuccess)
             {
-                await UniTask.Delay(TimeSpan.FromSeconds(MatchDelay));
+                await UniTask.Delay(TimeSpan.FromSeconds(MatchDelay), cancellationToken: _delaysCancellationTokenSource.Token)
+                    .SuppressCancellationThrow();
+                if (_delaysCancellationTokenSource.IsCancellationRequested)
+                {
+                    return;
+                }
                 
                 //Play sound
                 foreach (var cardItemViewModel in selectedDequeCards)
@@ -102,7 +109,12 @@ namespace Views.World.Cards
             }
             else
             {
-                await UniTask.Delay(TimeSpan.FromSeconds(DeselectDelay));
+                await UniTask.Delay(TimeSpan.FromSeconds(DeselectDelay), cancellationToken: _delaysCancellationTokenSource.Token)
+                    .SuppressCancellationThrow();
+                if (_delaysCancellationTokenSource.IsCancellationRequested)
+                {
+                    return;
+                }
              
                 // Play sound
                 foreach (var cardItemViewModel in selectedDequeCards)
@@ -134,6 +146,7 @@ namespace Views.World.Cards
 
         public override void Dispose()
         {
+            _delaysCancellationTokenSource?.Cancel();
             foreach (var cardViewModel in _cardViewModels)
             {
                 cardViewModel.OnClick -= CardItemOnClicked;
