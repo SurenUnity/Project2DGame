@@ -60,6 +60,14 @@ namespace Views.World.Cards
             }
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.G))
+            {
+                _gridComponent.Grid(ViewModel.Columns, ViewModel.Rows, _cardItemViews.ToArray());
+            }
+        }
+
         private void CreateCardItems(IEnumerable<ICardItemViewModel> cardItemViewModels)
         {
             foreach (var cardItemViewModel in cardItemViewModels)

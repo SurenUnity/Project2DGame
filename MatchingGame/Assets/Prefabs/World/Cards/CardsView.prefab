@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9770a3ae771458bb0827fe0254ccd43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  paddingX: 1.3
-  paddingY: 1
-  _spacing: 0.2
+  paddingX: 0.3
+  paddingY: 2.7
+  _spacingX: 0.2
+  _spacingY: 0.2
