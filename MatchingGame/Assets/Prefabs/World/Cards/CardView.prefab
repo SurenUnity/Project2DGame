@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _iconSpriteRenderer: {fileID: 4613489781778015742}
+  _animationSettings: {fileID: 11400000, guid: 1620e5564dd654fe3b9a6f381474fe00, type: 2}
 --- !u!61 &-4419013028960912865
 BoxCollider2D:
   m_ObjectHideFlags: 0

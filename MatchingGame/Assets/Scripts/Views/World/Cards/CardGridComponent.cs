@@ -47,7 +47,7 @@ namespace Views.World.Cards
                     var obj = cards[cardIndex];
                     
                     var scale = Mathf.Min(cellWidth, cellHeight);
-                    obj.transform.localScale = new Vector3(scale, scale, 1);
+                    obj.SetScale(new Vector3(scale, scale, 1));
                     obj.transform.position = position;
                     
                     cardIndex++;

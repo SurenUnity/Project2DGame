@@ -1,17 +1,22 @@
 using System;
 using System.Collections.Generic;
 using ClientServices;
+using Cysharp.Threading.Tasks;
 using MVVM.Core.ViewModel;
 using Services.Cards;
 using Services.Level;
 using Services.MatchingGame;
 using UniRx;
+using Utils;
 
 namespace Views.World.Cards
 {
     public class CardsViewModel : BaseViewModel, ICardsViewModel
     {
         public event Action GameStared;
+
+        private const float DeselectDelay = 0.7f;
+        private const float MatchDelay = 0.5f;
 
         private readonly ICardsService _cardsService;
         private readonly IMatchingGameService _matchingGameService;
@@ -20,7 +25,7 @@ namespace Views.World.Cards
 
         private IReactiveCollection<ICardItemViewModel> _cardViewModels = new ReactiveCollection<ICardItemViewModel>();
 
-        private List<ICardItemViewModel> _selectedCards = new();
+        private Queue<ICardItemViewModel> _selectedCards = new();
 
         private CompositeDisposable _compositeDisposable = new();
         
@@ -54,28 +59,66 @@ namespace Views.World.Cards
         private void CreateCardViewModel(ICardItem cardItem)
         {
             var cardViewModel = new CardItemItemViewModel(cardItem, _assetsProvider);
-            cardViewModel.OnClick += CardViewModelOnClicked;
+            cardViewModel.OnClick += CardItemOnClicked;
             _cardViewModels.Add(cardViewModel);
         }
-
-        private void CardViewModelOnClicked(ICardItemViewModel cardItemViewModel)
+        
+        private void CardItemOnClicked(ICardItemViewModel cardItemViewModel)
         {
-            _selectedCards.Add(cardItemViewModel);
-            if (_selectedCards.Count < _levelService.LevelItem.Value.PairCount)
+            _selectedCards.Enqueue(cardItemViewModel);
+            SelectCard().Forget();
+        }
+
+        private async UniTaskVoid SelectCard()
+        {
+            var pairCount = _levelService.LevelItem.Value.PairCount;
+            
+            if (_selectedCards.Count < pairCount)
             {
                 return;
             }
 
-            var cardIds = new List<string>();
+            var selectedDequeCards = new List<ICardItemViewModel>();
+            var cardStaticIds = new List<int>();
 
-            foreach (var selectedCard in _selectedCards)
+            for (int i = 0; i < pairCount; i++)
             {
-                cardIds.Add(selectedCard.Id.Value);
+                var cardItemViewModel = _selectedCards.Dequeue();
+                cardStaticIds.Add(cardItemViewModel.StaticId);
+                selectedDequeCards.Add(cardItemViewModel);
             }
             
-            _matchingGameService.Match(cardIds);
-            
-            _selectedCards.Clear();
+            var isSuccess = _matchingGameService.Match(cardStaticIds);
+
+            if (isSuccess)
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(MatchDelay));
+                
+                //Play sound
+                foreach (var cardItemViewModel in selectedDequeCards)
+                {
+                    cardItemViewModel.Match();
+                }
+            }
+            else
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(DeselectDelay));
+             
+                // Play sound
+                foreach (var cardItemViewModel in selectedDequeCards)
+                {
+                    if (_selectedCards.Contains(cardItemViewModel))
+                    {
+                        continue;
+                    }
+                    cardItemViewModel.Deselect();
+                }
+            }
+
+            if (_selectedCards.Count >= pairCount)
+            {
+                SelectCard().Forget();
+            }
         }
 
         private void OnGameStarted()
@@ -93,7 +136,7 @@ namespace Views.World.Cards
         {
             foreach (var cardViewModel in _cardViewModels)
             {
-                cardViewModel.OnClick -= CardViewModelOnClicked;
+                cardViewModel.OnClick -= CardItemOnClicked;
                 cardViewModel.Dispose();
             }
             _matchingGameService.OnGameStarted -= OnGameStarted;

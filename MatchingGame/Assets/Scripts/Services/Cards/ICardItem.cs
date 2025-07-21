@@ -5,6 +5,7 @@ namespace Services.Cards
 {
     public interface ICardItem
     {
+        int StaticId { get; }
         IReadOnlyReactiveProperty<string> Id { get; }
         IReadOnlyReactiveProperty<CardStateType> StateType { get; }
         void Init(CardConfigModel cardConfigModel);
