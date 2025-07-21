@@ -7,6 +7,7 @@ using UniRx;
 using Views.Layer;
 using Views.UI.Core;
 using Views.UI.LosePopup;
+using Views.UI.MainMenu;
 using Views.UI.WinPopup;
 
 namespace Views.UI.MatchGameScreen
@@ -16,6 +17,7 @@ namespace Views.UI.MatchGameScreen
         IReadOnlyReactiveProperty<int> Score { get; }
         IReadOnlyReactiveProperty<int> Level { get; }
         IReadOnlyReactiveProperty<int> TriesLeft { get; }
+        UniTaskVoid QuitLevel();
     }
     
     public class MatchGameScreenViewModel : BaseViewModel, IMatchGameScreenViewModel
@@ -57,6 +59,11 @@ namespace Views.UI.MatchGameScreen
         private async UniTaskVoid OpenLosePopup()
         {
             await ViewManager.ShowAsync<LosePopupView>(LayerNames.Popup);
+        }
+
+        public async UniTaskVoid QuitLevel()
+        {
+            await ViewManager.ShowAsync<MainMenuScreenView>(LayerNames.Screen);
         }
 
         public override void Dispose()

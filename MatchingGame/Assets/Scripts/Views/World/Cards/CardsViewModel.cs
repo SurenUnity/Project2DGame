@@ -48,6 +48,12 @@ namespace Views.World.Cards
             CreateCardViewModels(_cardsService.Cards);
             _cardsService.Cards.ObserveAdd().Subscribe(v=>CreateCardViewModel(v.Value)).AddTo(_compositeDisposable);
             _matchingGameService.OnGameStarted += OnGameStarted;
+            _matchingGameService.OnLevelQuit += OnLevelQuit;
+        }
+
+        private void OnLevelQuit()
+        {
+            _delaysCancellationTokenSource?.Cancel();
         }
 
         private void CreateCardViewModels(IEnumerable<ICardItem> cardItems)
@@ -153,6 +159,7 @@ namespace Views.World.Cards
                 cardViewModel.Dispose();
             }
             _matchingGameService.OnGameStarted -= OnGameStarted;
+            _matchingGameService.OnLevelQuit -= OnLevelQuit;
             _cardViewModels.Clear();
             _compositeDisposable.Dispose();
         }

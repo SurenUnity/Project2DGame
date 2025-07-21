@@ -52,7 +52,7 @@ namespace MVVM.Core
                 viewModel.SetViewManager(this);
             }
             
-            var view = _views.FirstOrDefault(v=>v.ViewModelType == viewModelType);
+            var view = _views.FirstOrDefault(v=>v.GetType() == typeof(TView));
             if (view == null)
             {
                 view = await CreateViewAsync<TView>(layer, viewName);

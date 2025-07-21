@@ -9,8 +9,10 @@ namespace Services.MatchingGame
         event Action OnGameStarted;
         event Action OnWin;
         event Action OnLose;
+        event Action OnLevelQuit;
         IReadOnlyReactiveProperty<int> TriesLeftCount { get; }
         void StartGame();
         bool Match(List<int> cardStaticIds);
+        void QuitLevel();
     }
 }
