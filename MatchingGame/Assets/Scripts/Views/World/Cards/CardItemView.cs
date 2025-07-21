@@ -41,6 +41,14 @@ namespace Views.World.Cards
             SetIcon(_itemViewModel.Icon.Value);
         }
 
+        public void ResetAnimation()
+        {
+            _selectedSequence?.Kill();
+            _deselectedSequence?.Kill();
+            _matchSequence?.Kill();
+            transform.localScale = _defaultScale;
+        }
+        
         public void PreviewOn()
         {
             _iconSpriteRenderer.gameObject.SetActive(true);
