@@ -151,6 +151,8 @@ namespace Views.World.Cards
 
         private void OnGameStarted()
         {
+            _delaysCancellationTokenSource = new();
+            
             _cardsForLevel.Clear();
             
             foreach (var cardItem in _cardsService.CardsForLevel)
