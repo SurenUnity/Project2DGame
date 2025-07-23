@@ -31,7 +31,7 @@ namespace Views.UI.MainMenu
         {
             _selecLevelButton.onClick.AddListener(OpenSelectLevelPanel);
             _selectLevelBackButton.onClick.AddListener(HideSelectLevelPanel);
-            _continueButton.onClick.AddListener(ContinueGame);
+            _continueButton.onClick.AddListener(ContinueGameClickHandler);
             _newGameButton.onClick.AddListener(NewGameClickHandler);
             ViewModel.TotalScore.Subscribe(SetTotalScore).AddTo(_compositeDisposable);
             CreateLevelItems();
@@ -53,9 +53,15 @@ namespace Views.UI.MainMenu
             }
         }
 
-        private void ContinueGame()
+        private void ContinueGameClickHandler()
+        {
+            ContinueGame().Forget();
+        }
+
+        private async UniTaskVoid ContinueGame()
         {
             ViewModel.Continue();
+            await Hide();
         }
 
         private void NewGameClickHandler()
@@ -99,7 +105,7 @@ namespace Views.UI.MainMenu
             
             _selecLevelButton.onClick.RemoveListener(OpenSelectLevelPanel);
             _selectLevelBackButton.onClick.RemoveListener(HideSelectLevelPanel);
-            _continueButton.onClick.RemoveListener(ContinueGame);
+            _continueButton.onClick.RemoveListener(ContinueGameClickHandler);
             _newGameButton.onClick.RemoveListener(NewGameClickHandler);
             
             _compositeDisposable.Dispose();
