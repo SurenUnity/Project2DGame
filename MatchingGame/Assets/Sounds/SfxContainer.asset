@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c19769dca5ce4e05bec21bebcb45594b, type: 3}
+  m_Name: SfxContainer
+  m_EditorClassIdentifier: 
+  sfxContainersData:
+  - id: Flip
+    clip: {fileID: 8300000, guid: e5201132af38641b4aee2bc763730ac9, type: 3}
+  - id: Match
+    clip: {fileID: 8300000, guid: 69b3ca17571554ce39f93b920a99f01d, type: 3}
+  - id: Mismatch
+    clip: {fileID: 8300000, guid: 17a3357478d7c4a3bb0e81863d5a6886, type: 3}
+  - id: Win
+    clip: {fileID: 8300000, guid: bccd6ba00c42f4748bd5ae9fcb620783, type: 3}
+  - id: Lose
+    clip: {fileID: 8300000, guid: d52ffd5e5a71246acb4cdd2ae2c1ba98, type: 3}

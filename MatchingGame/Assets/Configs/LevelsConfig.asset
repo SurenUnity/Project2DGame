@@ -21,7 +21,7 @@ MonoBehaviour:
       - bomb
       columns: 2
       rows: 2
-      triesCount: 1
+      triesCount: 2
     - level: 2
       pairCount: 2
       cardIds:
@@ -40,7 +40,7 @@ MonoBehaviour:
       columns: 3
       rows: 3
       triesCount: 15
-    - level: 3
+    - level: 4
       pairCount: 3
       cardIds:
       - axe

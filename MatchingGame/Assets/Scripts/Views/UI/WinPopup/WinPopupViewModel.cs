@@ -1,6 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using MVVM.Core.ViewModel;
+using Services.Audio;
 using Services.Level;
 using Services.MatchingGame;
 using Views.Layer;
@@ -18,11 +19,21 @@ namespace Views.UI.WinPopup
     public class WinPopupViewModel : BaseViewModel, IWinPopupViewModel
     {
         private readonly IMatchingGameService _matchingGameService;
+        private readonly IAudioManager _audioManager;
 
         public WinPopupViewModel(
-            IMatchingGameService matchingGameService)
+            IMatchingGameService matchingGameService,
+            IAudioManager audioManager)
         {
             _matchingGameService = matchingGameService;
+            _audioManager = audioManager;
+        }
+
+        public override void ViewShowed()
+        {
+            base.ViewShowed();
+            
+            _audioManager.PlaySfx(AudioClipNames.Win);
         }
 
         public void PlayNextLevel()
