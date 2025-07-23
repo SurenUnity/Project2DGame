@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using Configs.Level;
+using Cysharp.Threading.Tasks;
+using Services.StateSaver;
+using States.Level;
 using UniRx;
 
 namespace Services.Level
@@ -7,7 +10,10 @@ namespace Services.Level
     public class LevelService : ILevelService
     {
         private readonly LevelsConfigModel _levelsConfigModel;
-        
+        private readonly IStateSaver<LevelStateModel> _stateSaver;
+
+        private LevelStateModel _stateModel;
+
         private List<ILevelItem> _levels = new();
         
         private ReactiveProperty<ILevelItem> _levelItem = new();
@@ -17,11 +23,23 @@ namespace Services.Level
         public IReadOnlyReactiveProperty<ILevelItem> LevelItem => _levelItem;
         public int LevelsCount => _levels.Count;
         
-        public LevelService(LevelsConfigModel levelsConfigModel)
+        public LevelService(LevelsConfigModel levelsConfigModel,
+            IStateSaver<LevelStateModel> stateSaver)
         {
             _levelsConfigModel = levelsConfigModel;
-            
+            _stateSaver = stateSaver;
+        }
+
+        public async UniTask InitAsync()
+        {
+            await LoadState();
+        }
+
+        private async UniTask LoadState()
+        {
+            _stateModel = await _stateSaver.InitAndLoad();
             CreateLevels();
+            SetLevel(_stateModel.Level);
         }
 
         public void NextLevel()
@@ -42,6 +60,8 @@ namespace Services.Level
             {
                 _level.Value = _levels.Count;
             }
+
+            _stateModel.Level = _level.Value;
             
             _levelItem.SetValueAndForceNotify(_levels[_level.Value - 1]);
         }
@@ -53,8 +73,6 @@ namespace Services.Level
                 var levelItem = new LevelItem(levelConfigModel);
                 _levels.Add(levelItem);
             }
-
-            _levelItem.Value = _levels[0];
         }
     }
 }

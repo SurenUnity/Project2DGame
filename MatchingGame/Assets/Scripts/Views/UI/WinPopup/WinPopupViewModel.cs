@@ -5,6 +5,7 @@ using Services.Level;
 using Services.MatchingGame;
 using Views.Layer;
 using Views.UI.MainMenu;
+using Views.UI.MatchGameScreen;
 
 namespace Views.UI.WinPopup
 {
@@ -31,7 +32,9 @@ namespace Views.UI.WinPopup
 
         public async UniTaskVoid MainMenu()
         {
+            _matchingGameService.QuitLevel();
             await ViewManager.ShowAsync<MainMenuScreenView>(LayerNames.Screen);
+            await ViewManager.HideAsync<MatchGameScreenView>();
         }
         
         public override void Dispose()

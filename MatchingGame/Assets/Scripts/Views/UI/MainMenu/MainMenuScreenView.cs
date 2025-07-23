@@ -55,7 +55,7 @@ namespace Views.UI.MainMenu
 
         private void ContinueGame()
         {
-            //TODO save/load system
+            ViewModel.Continue();
         }
 
         private void NewGameClickHandler()
