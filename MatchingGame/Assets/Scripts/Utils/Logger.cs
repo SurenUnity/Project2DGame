@@ -58,5 +58,10 @@ namespace Utils
         {
             Debug.LogException(exception);
         }
+        
+        public static void LogExceptionWithParams(string message, Exception e)
+        {
+            Debug.LogException(new Exception(message, e));
+        }
     }
 }

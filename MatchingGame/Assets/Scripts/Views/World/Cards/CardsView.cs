@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Extensions;
+using Services.Cards;
 using UniRx;
 using UnityEngine;
 using Views.World.Core;
@@ -37,10 +39,23 @@ namespace Views.World.Cards
 
         private async UniTaskVoid PrepareCards()
         {
-            _cardItemViews.Shuffle();
-            _gridComponent.Grid(ViewModel.Columns, ViewModel.Rows, _cardItemViews.ToArray());
             foreach (var cardItemView in _cardItemViews)
             {
+                cardItemView.Hide();
+            }
+
+            var enableCards = new List<CardItemView>();
+            
+            foreach (var cardItemViewModel in ViewModel.CardsForLevel)
+            {
+                enableCards.Add(_cardItemViews.FirstOrDefault(v => v.StaticId == cardItemViewModel.StaticId));
+            }
+            
+            enableCards.Shuffle();
+            _gridComponent.Grid(ViewModel.Columns, ViewModel.Rows, enableCards.ToArray());
+            foreach (var cardItemView in enableCards)
+            {
+                cardItemView.Show();
                 cardItemView.ResetAnimation();
                 cardItemView.PreviewOn();
             }
@@ -55,7 +70,7 @@ namespace Views.World.Cards
                 return;
             }
 
-            foreach (var cardItemView in _cardItemViews)
+            foreach (var cardItemView in enableCards)
             {
                 cardItemView.PreviewOff();
             }

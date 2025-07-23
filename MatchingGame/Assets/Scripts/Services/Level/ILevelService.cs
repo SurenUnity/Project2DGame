@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UniRx;
 
 namespace Services.Level
@@ -7,6 +8,7 @@ namespace Services.Level
         IReadOnlyReactiveProperty<int> Level { get; }
         IReadOnlyReactiveProperty<ILevelItem> LevelItem { get; }
         int LevelsCount { get; }
+        UniTask InitAsync();
         void NextLevel();
         void SetLevel(int level);
     }

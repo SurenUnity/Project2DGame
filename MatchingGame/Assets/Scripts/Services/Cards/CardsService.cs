@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Configs.Cards;
+using Cysharp.Threading.Tasks;
 using Extensions;
 using Services.Level;
 using UniRx;
@@ -17,15 +18,20 @@ namespace Services.Cards
         private CompositeDisposable _disposable = new();
         
         private IReactiveCollection<ICardItem> _cardItems = new ReactiveCollection<ICardItem>();
+        private List<ICardItem> _cardsForLevel = new();
         
         public IReadOnlyReactiveCollection<ICardItem> Cards => _cardItems;
+        public IReadOnlyList<ICardItem> CardsForLevel => _cardsForLevel;
 
         public CardsService(CardsConfigModel cardsConfigModel, 
             ILevelService levelService)
         {
             _cardsConfigModel = cardsConfigModel;
             _levelService = levelService;
+        }
 
+        public async UniTask InitAsync()
+        {
             _levelService.LevelItem.Subscribe(CreateCards).AddTo(_disposable);
         }
 
@@ -71,14 +77,27 @@ namespace Services.Cards
 
         public bool IsAllCardsMatched()
         {
-            return _cardItems.All(v => v.StateType.Value is CardStateType.Matched);
+            return _cardsForLevel.All(v => v.StateType.Value is CardStateType.Matched);
         }
 
         public void PrepareCardsToPlay()
         {
+            _cardsForLevel.Clear();
+            
             foreach (var cardItem in _cardItems)
             {
-                cardItem.Enable();
+                cardItem.Disable();
+            }
+            
+            foreach (var cardId in _levelService.LevelItem.Value.CardIds)
+            {
+                for (int i = 0; i < _levelService.LevelItem.Value.PairCount; i++)
+                {
+                    var cardItem = _cardItems.FirstOrDefault(v =>
+                        v.Id.Value == cardId && v.StateType.Value is CardStateType.Disable);
+                    cardItem?.Enable();
+                    _cardsForLevel.Add(cardItem);
+                }
             }
         }
         

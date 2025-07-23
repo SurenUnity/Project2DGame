@@ -16,6 +16,7 @@ namespace Views.UI.MainMenu
         IReadOnlyReactiveProperty<int> TotalScore { get; }
         UniTaskVoid SelectLevel(int level);
         void NewGame();
+        void Continue();
     }
     
     public class MainMenuScreenViewModel : BaseViewModel, IMainMenuScreenViewModel
@@ -51,7 +52,7 @@ namespace Views.UI.MainMenu
 
         public void Continue()
         {
-            //After save/load system
+            SelectLevel(_levelService.Level.Value).Forget();
         }
         
         public override void Dispose()

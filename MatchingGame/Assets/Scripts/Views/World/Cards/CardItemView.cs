@@ -16,6 +16,8 @@ namespace Views.World.Cards
 {
     public class CardItemView : MonoBehaviour, IClickable, IDisposable
     {
+        public int StaticId => _itemViewModel.StaticId;
+        
         [SerializeField] private SpriteRenderer _iconSpriteRenderer;
         [SerializeField] private CardAnimationSettings _animationSettings;
         
@@ -54,11 +56,41 @@ namespace Views.World.Cards
             _iconSpriteRenderer.gameObject.SetActive(true);
             _isInteractable = false;
         }
+        
+        public void Click()
+        {
+            if (!_isInteractable)
+            {
+                return;
+            }
+            
+            if (_itemViewModel.StateType.Value is Deselected or Enable)
+            {
+                _itemViewModel.Click();
+                PlaySelectAnimation();
+            }
+        }
 
         public void PreviewOff()
         {
             _iconSpriteRenderer.gameObject.SetActive(false);
             _isInteractable = true;
+        }
+        
+        public void SetScale(Vector3 scale)
+        {
+            transform.localScale = scale;
+            _defaultScale = scale;
+        }
+
+        public void Show()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
         }
         
         private void OnDeselected()
@@ -69,12 +101,6 @@ namespace Views.World.Cards
         private void OnMatch()
         {
             PlayMatchAnimation();
-        }
-
-        public void SetScale(Vector3 scale)
-        {
-            transform.localScale = scale;
-            _defaultScale = scale;
         }
         
         private void PlaySelectAnimation()
@@ -140,20 +166,6 @@ namespace Views.World.Cards
             _itemViewModel.OnMatch -= OnMatch;
             _itemViewModel.OnDeselected -= OnDeselected;
             _disposable.Dispose();
-        }
-
-        public void Click()
-        {
-            if (!_isInteractable)
-            {
-                return;
-            }
-            
-            if (_itemViewModel.StateType.Value is Deselected or Enable)
-            {
-                _itemViewModel.Click();
-                PlaySelectAnimation();
-            }
         }
     }
 }

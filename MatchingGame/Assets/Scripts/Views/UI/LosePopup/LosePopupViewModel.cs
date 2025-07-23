@@ -1,6 +1,9 @@
 using Cysharp.Threading.Tasks;
 using MVVM.Core.ViewModel;
 using Services.MatchingGame;
+using Views.Layer;
+using Views.UI.MainMenu;
+using Views.UI.MatchGameScreen;
 
 namespace Views.UI.LosePopup
 {
@@ -26,7 +29,9 @@ namespace Views.UI.LosePopup
 
         public async UniTaskVoid MainMenu()
         {
-            //TODO Open main menu screen
+            _matchingGameService.QuitLevel();
+            await ViewManager.ShowAsync<MainMenuScreenView>(LayerNames.Screen);
+            await ViewManager.HideAsync<MatchGameScreenView>();
         }
 
         public override void Dispose()

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using ClientServices;
 using Cysharp.Threading.Tasks;
@@ -25,13 +26,15 @@ namespace Views.World.Cards
         private readonly ILevelService _levelService;
 
         private IReactiveCollection<ICardItemViewModel> _cardViewModels = new ReactiveCollection<ICardItemViewModel>();
+        private List<ICardItemViewModel> _cardsForLevel = new();
 
         private Queue<ICardItemViewModel> _selectedCards = new();
 
         private CancellationTokenSource _delaysCancellationTokenSource = new();
         private CompositeDisposable _compositeDisposable = new();
-        
+
         public IReadOnlyReactiveCollection<ICardItemViewModel> CardViewModels => _cardViewModels;
+        public IReadOnlyList<ICardItemViewModel> CardsForLevel => _cardsForLevel;
         public int Columns => _levelService.LevelItem.Value.Columns;
         public int Rows => _levelService.LevelItem.Value.Rows;
 
@@ -141,6 +144,14 @@ namespace Views.World.Cards
 
         private void OnGameStarted()
         {
+            _cardsForLevel.Clear();
+            
+            foreach (var cardItem in _cardsService.CardsForLevel)
+            {
+                var cardViewModel = _cardViewModels.FirstOrDefault(v => v.StaticId == cardItem.StaticId);
+                _cardsForLevel.Add(cardViewModel);
+            }
+            
             GameStared?.Invoke();
         }
         

@@ -63,6 +63,7 @@ namespace Views.UI.MatchGameScreen
 
         public async UniTaskVoid QuitLevel()
         {
+            _matchingGameService.QuitLevel();
             await ViewManager.ShowAsync<MainMenuScreenView>(LayerNames.Screen);
         }
 
