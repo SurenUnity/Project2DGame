@@ -38,6 +38,7 @@ namespace Views.World.Cards
         
         public void Click()
         {
+            
             _cardItem.Select();
             OnClick?.Invoke(this);
         }

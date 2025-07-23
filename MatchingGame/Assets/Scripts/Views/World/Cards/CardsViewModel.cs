@@ -5,6 +5,7 @@ using System.Threading;
 using ClientServices;
 using Cysharp.Threading.Tasks;
 using MVVM.Core.ViewModel;
+using Services.Audio;
 using Services.Cards;
 using Services.Level;
 using Services.MatchingGame;
@@ -24,6 +25,7 @@ namespace Views.World.Cards
         private readonly IMatchingGameService _matchingGameService;
         private readonly IAssetsProvider _assetsProvider;
         private readonly ILevelService _levelService;
+        private readonly IAudioManager _audioManager;
 
         private IReactiveCollection<ICardItemViewModel> _cardViewModels = new ReactiveCollection<ICardItemViewModel>();
         private List<ICardItemViewModel> _cardsForLevel = new();
@@ -41,12 +43,14 @@ namespace Views.World.Cards
         public CardsViewModel(ICardsService cardsService,
             IMatchingGameService matchingGameService,
             IAssetsProvider assetsProvider,
-            ILevelService levelService)
+            ILevelService levelService,
+            IAudioManager audioManager)
         {
             _cardsService = cardsService;
             _matchingGameService = matchingGameService;
             _assetsProvider = assetsProvider;
             _levelService = levelService;
+            _audioManager = audioManager;
 
             CreateCardViewModels(_cardsService.Cards);
             _cardsService.Cards.ObserveAdd().Subscribe(v=>CreateCardViewModel(v.Value)).AddTo(_compositeDisposable);
@@ -76,6 +80,7 @@ namespace Views.World.Cards
         
         private void CardItemOnClicked(ICardItemViewModel cardItemViewModel)
         {
+            _audioManager.PlaySfx(AudioClipNames.Flip);
             _selectedCards.Enqueue(cardItemViewModel);
             SelectCard().Forget();
         }
@@ -110,7 +115,8 @@ namespace Views.World.Cards
                     return;
                 }
                 
-                //Play sound
+                _audioManager.PlaySfx(AudioClipNames.Match);
+                
                 foreach (var cardItemViewModel in selectedDequeCards)
                 {
                     cardItemViewModel.Match();
@@ -125,7 +131,8 @@ namespace Views.World.Cards
                     return;
                 }
              
-                // Play sound
+                _audioManager.PlaySfx(AudioClipNames.Mismatch);
+                
                 foreach (var cardItemViewModel in selectedDequeCards)
                 {
                     if (_selectedCards.Contains(cardItemViewModel))
